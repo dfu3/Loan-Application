@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loan Application</title>
+</head>
+<body>
+  <h2>Loan Application Form</h2>
+  <form action="/submit" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="text" id="phone" name="phone"><br><br>
+
+    <label for="ssn">SSN:</label><br>
+    <input type="text" id="ssn" name="ssn"><br><br>
+
+    <label for="requested_loan_amount">Total Requested Loan Amount:</label><br>
+    <input type="number" step="0.01" id="requested_loan_amount" name="requested_loan_amount"><br><br>
+
+    <input type="submit" value="Submit Application">
+  </form>
+</body>
+</html>
