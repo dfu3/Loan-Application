@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Offer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .field {
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        .value {
+            margin-left: 10px;
+            color: #2c3e50;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Approved Loan Offer</h2>
+        
+        <div class="field">
+            <span class="label">Name:</span>
+            <span class="value">{{ name }}</span>
+        </div>
+
+        <div class="field">
+            <span class="label">Total Loan Amount:</span>
+            <span class="value">${{ loan_amount }}</span>
+        </div>
+
+        <div class="field">
+            <span class="label">Interest Rate:</span>
+            <span class="value">{{ interest_rate * 100 }}%</span>
+        </div>
+
+        <div class="field">
+            <span class="label">Term:</span>
+            <span class="value">{{ term }} months</span>
+        </div>
+
+        <div class="field">
+            <span class="label">Monthly Payment:</span>
+            <span class="value">${{ monthly_payment }}</span>
+        </div>
+
+        <a href="/apply" class="back-button">Back to Application</a>
+    </div>
+</body>
+</html>
