@@ -1,5 +1,5 @@
 
-# middleware to process and save loan data
+# middleware to process loan data
 import random
 
 def get_num_credit_lines():
@@ -31,7 +31,7 @@ def process_loan_req(requested_amount, credit_lines):
     
     monthly_payment = calculate_monthly_payment(requested_amount, annual_interest_rate, term_months)
     total_loan_amount = monthly_payment * term_months
-    # Return the computed offer
+
     return {
         "status": "approved",
         "credit_lines": credit_lines,

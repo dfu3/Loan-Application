@@ -26,19 +26,10 @@ def submit():
 
     save_user_app(request.form.to_dict(), loan_result)
 
-    status = loan_result['status']
-    session['status'] = status
     session['name'] = request.form.get('name')
-    session['requested_amount'] = request.form.get('requested_amount')
-
-    if status == 'approved':
-        session['total_amount'] = loan_result['total_amount']
-        session['interest_rate'] = loan_result['interest_rate']
-        session['term_months'] = loan_result['term_months']
-        session['monthly_payment'] = loan_result['monthly_payment']
-    
-
+    session['loan_result'] = loan_result
     session['from_submit'] = True
+
     return redirect(url_for('offer'))
 
 @app.route('/offer')
@@ -46,59 +37,50 @@ def offer():
     if not session.get('from_submit'):
         return redirect(url_for('apply'))
     
+    loan_result = session.get('loan_result')
     name = session.get('name')
-    status = session.get('status')
-    requested = session.get('requested_amount')
+    status = loan_result.get('status')
+
     if status == 'denied':
         return render_template(
             'loan_denied.html',
             name=name,
-            requested_amount=requested
+            requested_amount=loan_result.get('requested_amount')
         )
-    amount = session.get('total_amount')
-    interest = session.get('interest_rate')
-    term = session.get('term_months')
-    payment = session.get('monthly_payment')
 
     return render_template(
         'loan_offer.html',
         name=name,
-        loan_amount=amount,
-        interest_rate=interest,
-        term=term,
-        monthly_payment=payment
+        loan_amount=loan_result.get('total_amount'),
+        interest_rate=loan_result.get('interest_rate'),
+        term=loan_result.get('term_months'),
+        monthly_payment=loan_result.get('monthly_payment')
     )
 
 
 def validate_form_data(form):
     errors = []
 
-    # Name: must not be empty
     name = form.get('name', '').strip()
     if not name:
         errors.append("Name is required.")
 
-    # Address: must not be empty
     address = form.get('address', '').strip()
     if not address:
         errors.append("Address is required.")
 
-    # Email: basic format check
     email = form.get('email', '').strip()
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         errors.append("Valid email is required.")
 
-    # Phone: digits only, length check
     phone = form.get('phone', '').strip()
     if not re.fullmatch(r"\d{10}", phone):
         errors.append("Phone number must be 10 digits.")
 
-    # SSN: format XXX-XX-XXXX
     ssn = form.get('ssn', '').strip()
     if not re.fullmatch(r"\d{3}-\d{2}-\d{4}", ssn):
         errors.append("SSN must be in the format XXX-XX-XXXX.")
 
-    # Requested Loan Amount: must be a number > 0
     try:
         print(form.get('requested_amount'))
         amount = float(form.get('requested_amount', 0))
